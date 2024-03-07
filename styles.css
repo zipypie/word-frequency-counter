@@ -48,3 +48,12 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+.display_text{
+    width: 100%;
+
+}
+.display_text table {
+    margin: 0 auto; /* This will horizontally center the table */
+    text-align: center; /* This will center the content of the table cells */
+}
