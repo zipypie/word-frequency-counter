@@ -10,20 +10,26 @@
     
 <?php
 
+
+//tokenize text into words
 function tokenizeText($text)
 {
-
     $words = preg_split('/[\s,.-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
     return $words;
 }
 
+
+//calculate word frequencies
 function calculateWordFrequency($text, $stopWords, $sortOrder, $limit)
 {
-    $text = strtolower($text);
+
+    $text = strtolower($text);    //convert to lowercase
+
     $words = tokenizeText($text);
-    $filteredWords = array_diff($words, $stopWords);
-    $totalWords = count($filteredWords);
-    $wordFrequency = array_count_values($filteredWords);
+
+    $filteredWords = array_diff($words, $stopWords); //remove stop words from the list of words
+    $totalWords = count($filteredWords); // count the total number of words
+    $wordFrequency = array_count_values($filteredWords); //count the frequency of word
 
     if ($sortOrder == 'asc') {
         asort($wordFrequency);
@@ -32,8 +38,6 @@ function calculateWordFrequency($text, $stopWords, $sortOrder, $limit)
     }
 
     $wordFrequency = array_slice($wordFrequency, 0, $limit);
-
-
     $htmlContent = "";
 
 
@@ -73,8 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["text"])) {
         echo "<p>Invalid limit value.</p>";
         exit();
     }
-
-
     $wordFrequencyHTML = calculateWordFrequency($text, $stopWords, $sortOrder, $limit);
 } else {
     echo "<p>Please paste some text in the textarea.</p>";
@@ -97,7 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["text"])) {
     <input type="submit" value="Calculate Word Frequency">
 </form>
 
-<div class="display_text">
+
+
+<div class="display_text"> 
     <?php
     if (isset($wordFrequencyHTML)) {
         echo $wordFrequencyHTML;
